@@ -1,32 +1,48 @@
 services:
   spark-master:
-    image: spark-image
-    container_name: spark-master
+    image: spark-image:3.4.0
     ports:
-      - "8080:8080"
+      - "9090:8080"
+      - "7077:7077"
+    volumes:
+       - ./apps:/opt/spark-apps
+       - ./data:/opt/spark-data
     environment:
-      - SPARK_MODE=master
-  spark-worker-1:
-    image: spark-image
-    container_name: spark-worker-1
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_WORKLOAD=master
+  spark-worker-a:
+    image: spark-image:3.4.0
     ports:
-      - "8082:8081"
+      - "9091:8080"
+      - "7000:7000"
+    depends_on:
+      - spark-master
     environment:
-      - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
-  spark-worker-2:
-    image: spark-image
-    container_name: spark-worker-2
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-a
+    volumes:
+       - ./apps:/opt/spark-apps
+       - ./data:/opt/spark-data
+  spark-worker-b:
+    image: spark-image:3.4.0
     ports:
-      - "8083:8081"
+      - "9092:8080"
+      - "7001:7000"
+    depends_on:
+      - spark-master
     environment:
-      - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
-  spark-worker-3:
-    image: spark-image
-    container_name: spark-worker-3
-    ports:
-      - "8084:8081"
-    environment:
-      - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-b
+    volumes:
+        - ./apps:/opt/spark-apps
+        - ./data:/opt/spark-data

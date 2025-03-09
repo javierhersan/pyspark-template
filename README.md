@@ -119,9 +119,9 @@ Install the requirements:
 $ python -m pip install -r requirements.txt
 ```
 
-Install JAVA and set JAVA_HOME environment variable.
+Select your .venv as Python Interpreter in VSCode to enable code linting with Pylance. Click Ctrl+Shift+P and type "Python: Select Interpreter" and select you ".venv" python executable.
 
-Install Apache Hadoop.
+Install JAVA and Apache Hadoop and set JAVA_HOME environment variable.
 
 To run your PySpark application, modify the `src/main.py` file with your data processing logic. You can use the utility functions defined in `src/utils/helper.py` to assist with data loading and transformation.
 

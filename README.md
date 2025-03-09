@@ -2,6 +2,8 @@
 
 This project sets up a Spark cluster using Docker containers. It allows you to run python distributed data processing tasks using Apache Spark and pyspark library.
 
+![alt text](./docs/images/spark-cluster.png)
+
 ## Project Structure
 
 ```
@@ -58,11 +60,20 @@ pyspark-template
    ```
 
 7. **Access the Spark UI**
-   The Spark UI can be accessed at `http://localhost:8080`.
+   The Spark UI can be accessed at `http://localhost:9090`.
 
    ![alt text](./docs/images/spark-ui.png)
 
-## Usage
+## Usage: Docker Client
+
+```bash
+cd spark/client
+docker build -t spark-client:latest .
+docker run --network=cluster_default --name spark-client-app
+-e HOSTNAME=spark-client --rm spark-client:latest
+```
+
+## Usage: Local client
 
 Access to pyspark folder:
 
@@ -108,13 +119,20 @@ Install the requirements:
 $ python -m pip install -r requirements.txt
 ```
 
-Install JAVA and ser JAVA_HOME environment variable.
+Install JAVA and set JAVA_HOME environment variable.
+
+Install Apache Hadoop.
 
 To run your PySpark application, modify the `src/main.py` file with your data processing logic. You can use the utility functions defined in `src/utils/helper.py` to assist with data loading and transformation.
 
 ```console
 $ py main.py
 ```
+
+docker build -t spark-client:latest .
+
+docker run --network=cluster_default --name spark-client-app
+-e HOSTNAME=spark-client --rm spark-client:latest
 
 ## License
 

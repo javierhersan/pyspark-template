@@ -4,24 +4,7 @@ This project sets up a Spark cluster using Docker containers. It allows you to r
 
 ![alt text](./docs/images/spark-cluster.png)
 
-## Project Structure
-
-```
-pyspark-template
-├── pyspark
-│   ├── src
-|   |  ├── main.py
-│   |  └── utils
-│   |  └── helper.py
-│   └── requirements.txt
-├── spark
-|   └── docker
-│       ├── Dockerfile
-│       └── docker-compose.yml
-└── README.md
-```
-
-## Setup Instructions
+## Spark Cluster set-up
 
 1. **Clone the Repository**
 
@@ -64,16 +47,38 @@ pyspark-template
 
    ![alt text](./docs/images/spark-ui.png)
 
-## Usage: Docker Client
+## PySpark client set-up using Docker
+
+1. Access `spark/client` folder
 
 ```bash
 cd spark/client
+```
+
+2. Edit the Python code inside the `main.py` file with the code. This code will be executed in a distributed manner on the Spark cluster.
+
+3. Build the Spark client Docker image. The Spark client will push the code to the Spark master node, which is responsible for distributing the computing workload across the worker nodes within the Spark cluster.
+
+```bash
 docker build -t spark-client:latest .
+```
+
+4. Run the Spark Client and the pyspark job. Include the Spark client within the same network as the cluster so that both can communicate.
+
+```bash
 docker run --network=cluster_default --name spark-client-app
 -e HOSTNAME=spark-client --rm spark-client:latest
 ```
 
-## Usage: Local client
+5. The computational workload will be distributed across the worker nodes. The result can be viewed within the `spark-apps` and `spark-data` folders of the attached volumes.
+
+   ![alt text](./docs/images/pyspark-job-result.png)
+
+## PySpark local set-up using Windows
+
+Install JAVA and set JAVA_HOME environment variable.
+
+Install Apache Hadoop and set APACHE_HADOOP environment variable.
 
 Access to pyspark folder:
 
@@ -120,8 +125,6 @@ $ python -m pip install -r requirements.txt
 ```
 
 Select your .venv as Python Interpreter in VSCode to enable code linting with Pylance. Click Ctrl+Shift+P and type "Python: Select Interpreter" and select you ".venv" python executable.
-
-Install JAVA and Apache Hadoop and set JAVA_HOME environment variable.
 
 To run your PySpark application, modify the `src/main.py` file with your data processing logic. You can use the utility functions defined in `src/utils/helper.py` to assist with data loading and transformation.
 

@@ -5,8 +5,8 @@ services:
       - "9090:8080"
       - "7077:7077"
     volumes:
-       - ./spark-apps:/opt/spark-apps
-       - ./spark-data:/opt/spark-data
+       - ./volumes/spark-apps:/opt/spark-apps
+       - ./volumes/spark-data:/opt/spark-data
     environment:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master

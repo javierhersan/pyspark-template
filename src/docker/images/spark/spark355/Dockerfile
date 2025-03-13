@@ -55,9 +55,3 @@ RUN dos2unix /entrypoint.sh && chmod +x /entrypoint.sh
 RUN ls /opt/spark/bin
 
 CMD ["/bin/bash", "/entrypoint.sh"]
-
-# Build container image
-# docker build -t spark:3.5.5 .
-
-# Run container image
-# docker run spark:3.5.5

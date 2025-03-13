@@ -26,8 +26,8 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-a
     volumes:
-       - ./spark-apps:/opt/spark-apps
-       - ./spark-data:/opt/spark-data
+       - ./volumes/spark-apps:/opt/spark-apps
+       - ./volumes/spark-data:/opt/spark-data
   spark-worker-b:
     image: spark:3.5.5
     ports:
@@ -44,5 +44,5 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-b
     volumes:
-        - ./spark-apps:/opt/spark-apps
-        - ./spark-data:/opt/spark-data
+        - ./volumes/spark-apps:/opt/spark-apps
+        - ./volumes/spark-data:/opt/spark-data

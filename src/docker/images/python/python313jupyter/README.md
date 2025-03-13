@@ -1,6 +1,6 @@
 # python313jupyter
 
-This project sets up python v3.13 using Docker container.
+This project sets up a Jupyter Server with python v3.13 using Docker container.
 
 ## Spark Cluster set-up
 
